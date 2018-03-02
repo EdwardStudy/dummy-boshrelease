@@ -3,6 +3,7 @@
 # - vm_type: tiny
 # - network: manual
 
+---
 name: dummy
 
 releases:
@@ -15,12 +16,15 @@ stemcells:
   version: latest
 
 instance_groups:
-- name: dummy
+- azs:
+  - lon02
+  name: dummy
   instances: 1
-  vm_type: tiny
+  vm_type: coreNode
   stemcell: ubuntu
   networks:
-  - name: manual
+  - { name: public, default: [dns, gateway] }
+  - { name: private, default: [addressable] }
   jobs:
   - name: dummy
     release: dummy
